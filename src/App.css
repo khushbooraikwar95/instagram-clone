@@ -12,3 +12,13 @@
   border-bottom: 1px solid lightgray;
   object-fit: contain;
 }
+
+.modal {
+  background-color: rgb(229, 236, 236);
+}
+
+.app__signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
