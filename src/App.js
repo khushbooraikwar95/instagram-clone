@@ -86,12 +86,6 @@ function App() {
   };
   return (
     <div className="App">
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ) : (
-        <h3>Sorry! You need to login to upload.</h3>
-      )}
-
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={style} className="modal">
           <form className="app__signup">
@@ -176,8 +170,11 @@ function App() {
           imageUrl={post.imageUrl}
         />
       ))}
-
-      {/*Posts */}
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ) : (
+        <h3>Sorry! You need to login to upload.</h3>
+      )}
     </div>
   );
 }
