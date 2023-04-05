@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
 import { db, auth } from "./firebase";
-import { createUserWithEmailAndPassword } from "./firebase";
 import Modal from "@mui/material/Modal";
 import { Button, Input } from "@mui/material";
+import ImageUpload from "./ImageUpload";
 
 const style = {
   position: "absolute",
@@ -47,15 +47,17 @@ function App() {
   // useEffects runs a piece of code based on a specific condiion
   useEffect(() => {
     //this is where code runs
-    db.collection("posts").onSnapshot((snapshot) => {
-      //everytime a new post is added in db , this code fires..
-      setPosts(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          post: doc.data(),
-        }))
-      );
-    });
+    db.collection("posts")
+      // .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        //everytime a new post is added in db , this code fires..
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            post: doc.data(),
+          }))
+        );
+      });
   }, []);
 
   const signUp = (event) => {
@@ -84,6 +86,12 @@ function App() {
   };
   return (
     <div className="App">
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ) : (
+        <h3>Sorry! You need to login to upload.</h3>
+      )}
+
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={style} className="modal">
           <form className="app__signup">
